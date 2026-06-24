@@ -38,4 +38,8 @@ class BenchmarkMetrics(BaseModel):
     latency_seconds: float
     estimated_cost_usd: float | None = None
     quality_score: float | None = Field(default=None, ge=0, le=10)
+    quality_dimensions: dict[str, float] = Field(default_factory=dict)
+    evaluation_findings: list[str] = Field(default_factory=list)
+    evaluator_cost_usd: float = 0.0
+    evaluator_tokens: int = 0
     notes: str = ""

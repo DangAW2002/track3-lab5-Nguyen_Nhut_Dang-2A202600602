@@ -3,6 +3,7 @@
 Students should extend this file when adding new agents, outputs, or evaluation metrics.
 """
 
+from datetime import datetime, timezone
 from typing import Any
 
 from pydantic import BaseModel, Field
@@ -31,4 +32,11 @@ class ResearchState(BaseModel):
         self.iteration += 1
 
     def add_trace_event(self, name: str, payload: dict[str, Any]) -> None:
-        self.trace.append({"name": name, "payload": payload})
+        self.trace.append(
+            {
+                "sequence": len(self.trace) + 1,
+                "timestamp": datetime.now(timezone.utc).isoformat(),
+                "name": name,
+                "payload": payload,
+            }
+        )
